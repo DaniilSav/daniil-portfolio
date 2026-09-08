@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Даниил — веб-разработчик</title>
+<meta name="description" content="Даниил — веб-разработчик. Создаю быстрые уникальные сайты-визитки, лендинги и блоги для частных лиц.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header" id="top">
+  <div class="container header-inner">
+    <a href="#top" class="logo">Даниил<span class="dot">.</span></a>
+
+    <nav class="nav" id="nav">
+      <a href="#about">Обо мне</a>
+      <a href="#portfolio">Портфолио</a>
+      <a href="#services">Услуги</a>
+      <a href="#contact-form">Заявка</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Открыть меню" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero container">
+    <p class="hero-eyebrow">Веб-разработчик</p>
+    <h1>Даниил</h1>
+    <p class="hero-slogan">Создаю сайты для вашего дела</p>
+    <a href="#contact-form" class="btn btn-primary">Связаться</a>
+  </section>
+
+  <section id="about" class="section container">
+    <h2 class="section-title">Обо мне</h2>
+    <div class="about-content">
+      <p>
+        Я увлечён веб-разработкой и создаю быстрые, уникальные сайты с нуля —
+        вместо шаблонных решений на конструкторах. Такой подход даёт больше
+        свободы: сайт получается именно таким, каким его видит заказчик, а не
+        подогнанным под чужой шаблон.
+      </p>
+      <p>
+        Ценю индивидуальный подход к каждому проекту и постоянно развиваюсь в
+        этой сфере, чтобы предлагать современные и надёжные решения.
+      </p>
+    </div>
+  </section>
+
+  <section id="portfolio" class="section container">
+    <h2 class="section-title">Портфолио</h2>
+    <div class="portfolio-grid">
+
+      <article class="card">
+        <div class="card-image">
+          <img src="https://picsum.photos/seed/photographer/600/400" alt="Визитка фотографа — превью сайта" loading="lazy">
+        </div>
+        <div class="card-body">
+          <h3>Визитка фотографа</h3>
+          <p>Одностраничный сайт-портфолио с галереей работ и формой для заявки на съёмку.</p>
+          <a href="#" class="btn btn-outline">Смотреть сайт</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-image">
+          <img src="https://picsum.photos/seed/coffeeshop/600/400" alt="Сайт кофейни — превью сайта" loading="lazy">
+        </div>
+        <div class="card-body">
+          <h3>Сайт кофейни</h3>
+          <p>Лендинг с меню, атмосферными фото интерьера и картой проезда.</p>
+          <a href="#" class="btn btn-outline">Смотреть сайт</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-image">
+          <img src="https://picsum.photos/seed/barbershop/600/400" alt="Барбершоп — превью сайта" loading="lazy">
+        </div>
+        <div class="card-body">
+          <h3>Барбершоп</h3>
+          <p>Сайт с прайс-листом на услуги, портфолио стрижек и онлайн-записью.</p>
+          <a href="#" class="btn btn-outline">Смотреть сайт</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section id="services" class="section container">
+    <h2 class="section-title">Услуги</h2>
+    <p class="section-lead">
+      Ниже — ориентировочные вилки цен. Каждый проект индивидуален, поэтому
+      точная стоимость и сроки обсуждаются после того, как я узнаю детали
+      задачи — это позволяет не переплачивать за лишнее и не терять в качестве.
+    </p>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <h3>Визитка</h3>
+        <p class="price">от 1500 ₽</p>
+        <p class="price-desc">Компактный одностраничный сайт с ключевой информацией о вас или вашем деле.</p>
+      </div>
+      <div class="price-card price-card-accent">
+        <h3>Лендинг</h3>
+        <p class="price">от 5000 ₽</p>
+        <p class="price-desc">Продающая страница под конкретный товар, услугу или акцию.</p>
+      </div>
+      <div class="price-card">
+        <h3>Блог / многостраничный сайт</h3>
+        <p class="price">от 15 000 ₽</p>
+        <p class="price-desc">Несколько страниц, структура разделов, наполнение контентом.</p>
+      </div>
+    </div>
+
+    <div class="process">
+      <h3 class="process-title">Как я работаю</h3>
+      <ol class="process-steps">
+        <li>
+          <span class="step-num">1</span>
+          <span class="step-text">Оставляете заявку</span>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <span class="step-text">Обсуждаем задачу, и я считаю точную стоимость</span>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <span class="step-text">Делаю сайт</span>
+        </li>
+        <li>
+          <span class="step-num">4</span>
+          <span class="step-text">Вы получаете готовый результат</span>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="contact-form" class="section container">
+    <h2 class="section-title">Оставить заявку</h2>
+    <p class="section-lead">Расскажите немного о задаче — отвечу и обсудим детали.</p>
+
+    <form id="contactForm" class="contact-form" novalidate>
+      <div class="form-group">
+        <label for="name">Имя</label>
+        <input type="text" id="name" name="name" placeholder="Как к вам обращаться">
+        <span class="error-message" id="nameError"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="contact">Телефон или Email</label>
+        <input type="text" id="contact" name="contact" placeholder="+7 900 000-00-00 или mail@example.com">
+        <span class="error-message" id="contactError"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Сообщение</label>
+        <textarea id="message" name="message" rows="5" placeholder="Опишите, какой сайт нужен"></textarea>
+        <span class="error-message" id="messageError"></span>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Отправить заявку</button>
+      <p class="form-success" id="formSuccess">Спасибо! Заявка отправлена, я скоро свяжусь с вами.</p>
+    </form>
+  </section>
+
+  <section id="contacts" class="section container">
+    <h2 class="section-title">Контакты</h2>
+    <div class="contacts-block">
+      <a href="mailto:daniil@example.com" class="contact-email">daniil@example.com</a>
+
+      <div class="social-links">
+        <a href="#" class="social-icon" aria-label="Telegram" title="Telegram">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21.05 3.6L2.87 10.7c-1.24.5-1.23 1.19-.23 1.5l4.66 1.46 1.8 5.6c.22.6.11.85.75.85.49 0 .71-.22.98-.49l2.35-2.29 4.87 3.6c.9.5 1.54.24 1.77-.83l3.2-15.13c.33-1.32-.5-1.9-1.97-1.36zM8.5 14.3l-1.02-3.6 9.7-6.1c.44-.27.85-.13.52.17l-9.2 9.53z" fill="currentColor"/>
+          </svg>
+        </a>
+        <a href="#" class="social-icon" aria-label="MAX" title="MAX">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M8.5 15.5V8.5L12 12.5L15.5 8.5V15.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; <span id="year"></span> Даниил. Все права защищены.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
