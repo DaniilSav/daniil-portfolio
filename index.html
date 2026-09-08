@@ -164,6 +164,32 @@
         <span class="error-message" id="messageError"></span>
       </div>
 
+      <div class="form-group">
+        <label>Куда отправить заявку</label>
+        <div class="channel-group" role="radiogroup" aria-label="Способ отправки заявки">
+          <label class="channel-option">
+            <input type="radio" name="channel" value="email" checked>
+            <span>Email</span>
+          </label>
+          <label class="channel-option">
+            <input type="radio" name="channel" value="telegram">
+            <span>Telegram</span>
+          </label>
+          <label class="channel-option">
+            <input type="radio" name="channel" value="max">
+            <span>MAX</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="checkbox-option">
+          <input type="checkbox" id="consent" name="consent">
+          <span>Я даю согласие на обработку персональных данных в соответствии с <a href="privacy.html" target="_blank" rel="noopener">политикой конфиденциальности</a></span>
+        </label>
+        <span class="error-message" id="consentError"></span>
+      </div>
+
       <button type="submit" class="btn btn-primary">Отправить заявку</button>
       <p class="form-success" id="formSuccess">Спасибо! Заявка отправлена, я скоро свяжусь с вами.</p>
     </form>

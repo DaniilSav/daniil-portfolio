@@ -23,6 +23,18 @@ document.getElementById('year').textContent = new Date().getFullYear();
 const form = document.getElementById('contactForm');
 const formSuccess = document.getElementById('formSuccess');
 
+// TODO: замените на реальные контакты, когда они появятся
+const SEND_TARGETS = {
+  email: 'daniilsavostin4@gmail.com',
+  telegram: '#', // например: 'https://t.me/your_username'
+  max: '#', // ссылка на ваш профиль/чат в MAX
+};
+
+const CHANNEL_LABELS = {
+  telegram: 'Telegram',
+  max: 'MAX',
+};
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_RE = /^[+()\d][\d()\s-]{6,}$/;
 
@@ -82,11 +94,24 @@ function validateMessage() {
   return true;
 }
 
+function validateConsent() {
+  const checked = document.getElementById('consent').checked;
+  const errorEl = document.getElementById('consentError');
+  if (!checked) {
+    errorEl.textContent = 'Необходимо согласие на обработку персональных данных';
+    return false;
+  }
+  errorEl.textContent = '';
+  return true;
+}
+
 ['input', 'blur'].forEach((evt) => {
   document.getElementById('name').addEventListener(evt, validateName);
   document.getElementById('contact').addEventListener(evt, validateContact);
   document.getElementById('message').addEventListener(evt, validateMessage);
 });
+
+document.getElementById('consent').addEventListener('change', validateConsent);
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -95,10 +120,32 @@ form.addEventListener('submit', (e) => {
   const isNameValid = validateName();
   const isContactValid = validateContact();
   const isMessageValid = validateMessage();
+  const isConsentValid = validateConsent();
 
-  if (isNameValid && isContactValid && isMessageValid) {
-    // Placeholder: replace with real submission logic (fetch/EmailJS/etc.)
-    formSuccess.classList.add('show');
-    form.reset();
+  if (!isNameValid || !isContactValid || !isMessageValid || !isConsentValid) {
+    return;
   }
+
+  const channel = form.querySelector('input[name="channel"]:checked').value;
+  const name = document.getElementById('name').value.trim();
+  const contact = document.getElementById('contact').value.trim();
+  const message = document.getElementById('message').value.trim();
+  const text = `Заявка с сайта\nИмя: ${name}\nКонтакт: ${contact}\nСообщение: ${message}`;
+
+  if (channel === 'email') {
+    const subject = encodeURIComponent('Заявка с сайта');
+    const body = encodeURIComponent(text);
+    window.location.href = `mailto:${SEND_TARGETS.email}?subject=${subject}&body=${body}`;
+  } else {
+    const target = SEND_TARGETS[channel];
+    if (target === '#') {
+      alert(`Контакт для ${CHANNEL_LABELS[channel]} пока не указан. Свяжитесь через Email.`);
+      return;
+    }
+    const url = channel === 'telegram' ? `${target}?text=${encodeURIComponent(text)}` : target;
+    window.open(url, '_blank', 'noopener');
+  }
+
+  formSuccess.classList.add('show');
+  form.reset();
 });
