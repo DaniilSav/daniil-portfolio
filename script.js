@@ -27,7 +27,7 @@ const formSuccess = document.getElementById('formSuccess');
 const SEND_TARGETS = {
   email: 'daniilsavostin4@gmail.com',
   telegram: 'https://t.me/Daniil_Sozdanie_sait_bot',
-  max: '#', // ссылка на ваш профиль/чат в MAX
+  max: 'https://max.ru/u/f9LHodD0cOLB0avDDUJ9kRyvMIn_MPrRirk4h_VCeOk5sWPK8IcTrOg19NM',
 };
 
 const CHANNEL_LABELS = {
