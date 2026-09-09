@@ -26,7 +26,7 @@ const formSuccess = document.getElementById('formSuccess');
 // TODO: замените на реальные контакты, когда они появятся
 const SEND_TARGETS = {
   email: 'daniilsavostin4@gmail.com',
-  telegram: '#', // например: 'https://t.me/your_username'
+  telegram: 'https://t.me/Daniil_Sozdanie_sait_bot',
   max: '#', // ссылка на ваш профиль/чат в MAX
 };
 
@@ -136,16 +136,29 @@ form.addEventListener('submit', (e) => {
     const subject = encodeURIComponent('Заявка с сайта');
     const body = encodeURIComponent(text);
     window.location.href = `mailto:${SEND_TARGETS.email}?subject=${subject}&body=${body}`;
+    formSuccess.textContent = 'Спасибо! Заявка отправлена, я скоро свяжусь с вами.';
+    formSuccess.classList.add('show');
+    form.reset();
   } else {
     const target = SEND_TARGETS[channel];
     if (target === '#') {
       alert(`Контакт для ${CHANNEL_LABELS[channel]} пока не указан. Свяжитесь через Email.`);
       return;
     }
-    const url = channel === 'telegram' ? `${target}?text=${encodeURIComponent(text)}` : target;
-    window.open(url, '_blank', 'noopener');
-  }
 
-  formSuccess.classList.add('show');
-  form.reset();
+    // Telegram bot deep-links can't pre-fill arbitrary free text (?text= only
+    // works for user profiles/share links, and ?start= payloads are capped at
+    // 64 chars from a restricted charset). Copy the message instead so the
+    // user can paste it into the chat.
+    if (channel === 'telegram' && navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(text).catch(() => {});
+      formSuccess.textContent = 'Текст заявки скопирован — вставьте его в чат с ботом, который сейчас откроется.';
+    } else {
+      formSuccess.textContent = 'Спасибо! Заявка отправлена, я скоро свяжусь с вами.';
+    }
+
+    window.open(target, '_blank', 'noopener');
+    formSuccess.classList.add('show');
+    form.reset();
+  }
 });
