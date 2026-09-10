@@ -23,12 +23,19 @@ document.getElementById('year').textContent = new Date().getFullYear();
 const form = document.getElementById('contactForm');
 const formSuccess = document.getElementById('formSuccess');
 
-// TODO: замените на реальные контакты, когда они появятся
 const SEND_TARGETS = {
   email: 'daniilsavostin4@gmail.com',
   telegram: 'https://t.me/Daniil_Sozdanie_sait_bot',
   max: 'https://max.ru/u/f9LHodD0cOLB0avDDUJ9kRyvMIn_MPrRirk4h_VCeOk5sWPK8IcTrOg19NM',
 };
+
+const EMAILJS_SERVICE_ID = 'service_c36tb2x';
+const EMAILJS_TEMPLATE_ID = 'template_dp5eods';
+const EMAILJS_PUBLIC_KEY = 'lGdMLB5r-gmQqcRuT';
+
+if (window.emailjs) {
+  emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+}
 
 const CHANNEL_LABELS = {
   telegram: 'Telegram',
@@ -133,12 +140,29 @@ form.addEventListener('submit', (e) => {
   const text = `Заявка с сайта\nИмя: ${name}\nКонтакт: ${contact}\nСообщение: ${message}`;
 
   if (channel === 'email') {
-    const subject = encodeURIComponent('Заявка с сайта');
-    const body = encodeURIComponent(text);
-    window.location.href = `mailto:${SEND_TARGETS.email}?subject=${subject}&body=${body}`;
-    formSuccess.textContent = 'Спасибо! Заявка отправлена, я скоро свяжусь с вами.';
-    formSuccess.classList.add('show');
-    form.reset();
+    const submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+
+    emailjs
+      .send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        name,
+        contact,
+        email: contact,
+        from_name: name,
+        reply_to: contact,
+        message,
+      })
+      .then(() => {
+        formSuccess.textContent = 'Спасибо! Заявка отправлена, я скоро свяжусь с вами.';
+        formSuccess.classList.add('show');
+        form.reset();
+      })
+      .catch(() => {
+        alert('Не удалось отправить заявку. Попробуйте ещё раз или напишите на ' + SEND_TARGETS.email);
+      })
+      .finally(() => {
+        submitBtn.disabled = false;
+      });
   } else {
     const target = SEND_TARGETS[channel];
     if (target === '#') {
