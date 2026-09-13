@@ -19,9 +19,55 @@ nav.querySelectorAll('a').forEach((link) => {
 // Footer year
 document.getElementById('year').textContent = new Date().getFullYear();
 
+// Header elevation once the hero scrolls out of view
+const siteHeader = document.querySelector('.site-header');
+const hero = document.querySelector('.hero');
+
+new IntersectionObserver(
+  ([entry]) => {
+    siteHeader.classList.toggle('scrolled', !entry.isIntersecting);
+  },
+  { rootMargin: '-68px 0px 0px 0px' }
+).observe(hero);
+
+// Scroll-triggered reveal animations (skipped entirely under reduced motion)
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const staggeredGroups = [
+    document.querySelectorAll('.portfolio-grid .card'),
+    document.querySelectorAll('.pricing-grid .price-card'),
+    document.querySelectorAll('.process-steps li'),
+  ];
+
+  staggeredGroups.forEach((group) => {
+    group.forEach((el, i) => {
+      el.classList.add('reveal');
+      el.style.transitionDelay = `${i * 80}ms`;
+    });
+  });
+
+  document
+    .querySelectorAll('.section-title, .section-lead, .about-content, .process-title, .contact-form, .contacts-block')
+    .forEach((el) => el.classList.add('reveal'));
+
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+  );
+
+  document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
+}
+
 // Contact form validation
 const form = document.getElementById('contactForm');
 const formSuccess = document.getElementById('formSuccess');
+const formError = document.getElementById('formError');
 
 const SEND_TARGETS = {
   email: 'daniilsavostin4@gmail.com',
@@ -123,6 +169,7 @@ document.getElementById('consent').addEventListener('change', validateConsent);
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   formSuccess.classList.remove('show');
+  formError.classList.remove('show');
 
   const isNameValid = validateName();
   const isContactValid = validateContact();
@@ -158,7 +205,8 @@ form.addEventListener('submit', (e) => {
         form.reset();
       })
       .catch(() => {
-        alert('Не удалось отправить заявку. Попробуйте ещё раз или напишите на ' + SEND_TARGETS.email);
+        formError.textContent = 'Не удалось отправить заявку. Попробуйте ещё раз или напишите на ' + SEND_TARGETS.email;
+        formError.classList.add('show');
       })
       .finally(() => {
         submitBtn.disabled = false;
@@ -166,7 +214,8 @@ form.addEventListener('submit', (e) => {
   } else {
     const target = SEND_TARGETS[channel];
     if (target === '#') {
-      alert(`Контакт для ${CHANNEL_LABELS[channel]} пока не указан. Свяжитесь через Email.`);
+      formError.textContent = `Контакт для ${CHANNEL_LABELS[channel]} пока не указан. Свяжитесь через Email.`;
+      formError.classList.add('show');
       return;
     }
 
@@ -176,7 +225,7 @@ form.addEventListener('submit', (e) => {
     // user can paste it into the chat.
     if (channel === 'telegram' && navigator.clipboard?.writeText) {
       navigator.clipboard.writeText(text).catch(() => {});
-      formSuccess.textContent = 'Текст заявки скопирован — вставьте его в чат с ботом, который сейчас откроется.';
+      formSuccess.textContent = 'Текст заявки скопирован. Вставьте его в чат с ботом, который сейчас откроется.';
     } else {
       formSuccess.textContent = 'Спасибо! Заявка отправлена, я скоро свяжусь с вами.';
     }

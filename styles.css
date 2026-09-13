@@ -12,6 +12,7 @@
   --success: #4fd6a5;
   --radius: 14px;
   --max-width: 1080px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 * {
@@ -26,7 +27,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-family: "Manrope", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
 }
@@ -56,6 +57,11 @@ a {
   background: rgba(11, 12, 16, 0.85);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
+  transition: box-shadow 0.3s ease;
+}
+
+.site-header.scrolled {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 .header-inner {
@@ -81,6 +87,7 @@ a {
 }
 
 .nav a {
+  position: relative;
   font-size: 0.95rem;
   color: var(--text-muted);
   transition: color 0.2s ease;
@@ -88,6 +95,27 @@ a {
 
 .nav a:hover {
   color: var(--text);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s var(--ease-out);
+  }
+
+  .nav a:hover::after,
+  .nav a:focus-visible::after {
+    transform: scaleX(1);
+  }
 }
 
 .nav-toggle {
@@ -132,11 +160,7 @@ a {
   font-weight: 600;
   cursor: pointer;
   border: 1px solid transparent;
-  transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-}
-
-.btn:active {
-  transform: scale(0.97);
+  transition: transform 0.2s var(--ease-out), background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .btn-primary {
@@ -161,11 +185,56 @@ a {
   color: var(--accent);
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
 /* ---------- Hero ---------- */
 
 .hero {
   padding: 120px 24px 100px;
   text-align: center;
+}
+
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-eyebrow,
+.hero h1,
+.hero-slogan,
+.hero .btn {
+  opacity: 0;
+  animation: hero-fade-up 0.7s var(--ease-out) forwards;
+}
+
+.hero-eyebrow {
+  animation-delay: 0.05s;
+}
+
+.hero h1 {
+  animation-delay: 0.15s;
+}
+
+.hero-slogan {
+  animation-delay: 0.25s;
+}
+
+.hero .btn {
+  animation-delay: 0.35s;
 }
 
 .hero-eyebrow {
@@ -253,6 +322,16 @@ a {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card-image img {
+    transition: transform 0.4s var(--ease-out);
+  }
+
+  .card:hover .card-image img {
+    transform: scale(1.06);
+  }
 }
 
 .card-body {
@@ -480,14 +559,23 @@ a {
   align-self: flex-start;
 }
 
-.form-success {
+.form-success,
+.form-error {
   display: none;
-  color: var(--success);
   font-size: 0.92rem;
   margin: 0;
 }
 
-.form-success.show {
+.form-success {
+  color: var(--success);
+}
+
+.form-error {
+  color: var(--danger);
+}
+
+.form-success.show,
+.form-error.show {
   display: block;
 }
 
@@ -546,6 +634,19 @@ a {
   margin: 0;
 }
 
+/* ---------- Scroll reveal ---------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ---------- Responsive ---------- */
 
 @media (max-width: 720px) {
@@ -558,13 +659,16 @@ a {
     border-bottom: 1px solid var(--border);
     flex-direction: column;
     gap: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.25s ease;
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
   }
 
   .nav.open {
-    max-height: 320px;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
   }
 
   .nav a {
@@ -582,5 +686,36 @@ a {
 
   .section {
     padding: 64px 20px;
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .card:hover {
+    transform: none;
+  }
+
+  .hero-eyebrow,
+  .hero h1,
+  .hero-slogan,
+  .hero .btn,
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
   }
 }
