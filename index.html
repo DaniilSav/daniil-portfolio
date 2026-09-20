@@ -10,7 +10,9 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
 
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
@@ -84,7 +86,10 @@
 
       <article class="card">
         <div class="card-image">
-          <img src="portfolio-photographer.png" alt="Превью сайта «Визитка фотографа»" loading="lazy">
+          <picture>
+            <source srcset="portfolio-photographer.webp" type="image/webp">
+            <img src="portfolio-photographer.png" alt="Превью сайта «Визитка фотографа»" loading="lazy" width="600" height="400">
+          </picture>
         </div>
         <div class="card-body">
           <h3>Визитка фотографа</h3>
@@ -95,7 +100,10 @@
 
       <article class="card">
         <div class="card-image">
-          <img src="primer-coffeyna.png" alt="Превью сайта «Кофейня»" loading="lazy">
+          <picture>
+            <source srcset="primer-coffeyna.webp" type="image/webp">
+            <img src="primer-coffeyna.png" alt="Превью сайта «Кофейня»" loading="lazy" width="600" height="400">
+          </picture>
         </div>
         <div class="card-body">
           <h3>Сайт кофейни</h3>
@@ -106,7 +114,10 @@
 
       <article class="card">
         <div class="card-image">
-          <img src="barbershop.png" alt="Превью сайта «Барбершоп»" loading="lazy">
+          <picture>
+            <source srcset="barbershop.webp" type="image/webp">
+            <img src="barbershop.png" alt="Превью сайта «Барбершоп»" loading="lazy" width="600" height="400">
+          </picture>
         </div>
         <div class="card-body">
           <h3>Барбершоп</h3>
